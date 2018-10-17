@@ -16,7 +16,7 @@ class HasToken
      */
     public function handle($request, Closure $next)
     {
-        if (empty(ApiToken::where('token', $request->header('token'))->first()))
+        if (empty(ApiToken::where('token', $request->get('token'))->first()))
         {
             abort(403);
         }
