@@ -2,6 +2,8 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\HasApiPermission;
+use App\Http\Middleware\HasPermission;
 use App\Http\Middleware\HasToken;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -59,6 +61,8 @@ class Kernel extends HttpKernel
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'permission' => HasPermission::class,
+        'api.permission' => HasApiPermission::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'token' => HasToken::class,

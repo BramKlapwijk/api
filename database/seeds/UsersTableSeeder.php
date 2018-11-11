@@ -15,6 +15,6 @@ class UsersTableSeeder extends Seeder
             'name' => 'Admin',
             'email' => 'admin@example.nl',
             'password' => bcrypt(env('ADMIN_PASS'))
-        ]);
+        ])->syncPermissions(\Spatie\Permission\Models\Permission::all());
     }
 }

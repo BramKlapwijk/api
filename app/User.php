@@ -6,10 +6,11 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, Notifiable;
+    use HasApiTokens, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -32,5 +33,12 @@ class User extends Authenticatable
     public function apiToken()
     {
         return $this->hasOne(ApiToken::class);
+    }
+
+    public function scopeFindToken($query, $token)
+    {
+        return $query->whereHas('apiToken', function ($q) use ($token) {
+            $q->where('token', $token);
+        });
     }
 }

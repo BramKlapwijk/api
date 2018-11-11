@@ -12,14 +12,11 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::group(['middleware'=>'token'], function () {
-    Route::get('/coffees', 'CoffeeController@index');
+Route::group(['namespace'=>'Api', 'middleware'=>'token'], function () {
+    Route::get('{category}', 'MainController@index')->middleware('api.permission:view');
+    Route::get('{category}/{id}', 'MainController@show')->middleware('api.permission:view');
 });
-Route::get('test', function () {
-    return 'noice';
-})->middleware('token');
-
+//Route::apiResource('{category}', 'Api\MainController')->middleware('token');
